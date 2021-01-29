@@ -3,6 +3,7 @@ function tab = assessProgress(path)
     a = dir(path);
     a = {a.name};
     %Make sure the needed folders are in the directory
+    %"Set Data Path" creates necessary folders
     if ~any(ismember(a,'Segmented Files'))
         error('No "Segmented Files" folder in this directory')
     elseif ~any(ismember(a,'Cycle Averages'))
