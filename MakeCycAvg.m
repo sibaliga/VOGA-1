@@ -169,6 +169,11 @@ while ~strcmp(opts{ind},'Save') %Run until it's ready to save or just hopeless
         YLim_Vel = [-100 100];
         [filt,Data_calc,LE_V,RE_V,Data_cal,Data_In] = MakeCycAvg__filterTraces(type,filt_params_p,filt_params_v,te,ts,Data,keep_inds); 
         CycAvg = MakeCycAvg__makeStruct(LE_V,RE_V,keep_tr,Data,Fs,t_snip,stims,info,filt,In_FileName);
+        
+        % keep_tr is an array that holds whether to keep traces or not
+        % add ML algorithm to preselect traces pased on filters?
+        % Data_calc**
+        
         ha = MakeCycAvg__plotFullCycAvg([],type,colors,line_wid,YLim_Pos,YLim_Vel,te,ts,t_snip,stim,stims,Data,Data_In,Data_cal,Data_calc,LE_V,RE_V,CycAvg,keep_inds,keep_tr);
         % Determine if data are analyzeable
         analyze = nmquestdlg('Are these data analyzeable?','','Yes','No','Yes');
