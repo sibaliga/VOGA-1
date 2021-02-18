@@ -1,7 +1,6 @@
 function tab = assessProgress(path)
     sep = filesep;
-    a = dir(path);
-    a = {a.name};
+    a = extractfield(dir(path),'name');
     %Make sure the needed folders are in the directory
     %"Set Data Path" creates necessary folders
     if ~any(ismember(a,'Segmented Files'))
@@ -9,7 +8,7 @@ function tab = assessProgress(path)
     elseif ~any(ismember(a,'Cycle Averages'))
         error('No "Cycle Averages" folder in this directory')    
     end
-    b = dir([path,sep,'Segmented Files',sep,'*.mat']);
+    b = dir([path,sep,'Segmented Files',sep,'*-*.mat']);
     if isempty(b)
         error('No segments present.')
     else

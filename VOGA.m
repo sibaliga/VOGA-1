@@ -3,8 +3,7 @@
 % parameterize batches of files. 
 %
 % To initialize after MATLAB has restarted, navigate to the folder with this
-% function and type either "VOGA" or "allfoldpath" into the command line 
-% to add all functions to the path. If you typed "VOGA", hit cancel now.
+% function and type "allfoldpath" into the command line to add all functions to the path.
 %
 % To analyze data, navivate to the path with the Raw File, Segmented Files,
 % and Cycle Average folders and then run "VOGA."
@@ -91,10 +90,14 @@ while tf1
             all_exp_names{i} = all_exp_names{i}(1:dash(3)-1);
         end
         exp_names = unique(all_exp_names);
-        [indx,tf] = nmlistdlg('PromptString','Select experiment types to analyze:',...
-                       'SelectionMode','multiple',...
-                       'ListSize',[350 300],...
-                       'ListString',exp_names); 
+        if length(exp_names)>1
+            [indx,tf] = nmlistdlg('PromptString','Select experiment types to analyze:',...
+                           'SelectionMode','multiple',...
+                           'ListSize',[350 300],...
+                           'ListString',exp_names); 
+        else
+            tf = 0;
+        end
         if tf == 0
             exp_types = {};
         else
@@ -104,9 +107,21 @@ while tf1
             done = MakeCycAvg(path,Seg_Path,Cyc_Path,Experimenter,version,exp_types);
         end
     elseif strcmp(opts{ind},'Summary Table')
-        %Add here
+        path = cd; % Assumes you are in the right directory already
+        Cyc_Path = [path,filesep,'Cycle Averages'];
+        MakeCycleSummaryTable(path,Cyc_Path)
     elseif strcmp(opts{ind},'Generate Figures')
-        %Add here
+        path = cd; % Assumes you are in the right directory already
+        Seg_Path = [path,filesep,'Segmented Files'];
+        Cyc_Path = [path,filesep,'Cycle Averages'];
+        % Get version and experimenter info from the file
+        if ~any(contains(extractfield(dir(code_Path),'name'),'VerInfo.txt'))
+            writeInfoFile(code_Path);
+        end
+        data = readtable([code_Path,filesep,'VerInfo.txt'],'ReadVariableNames',false);
+        version = data{1,2}{:};
+        Experimenter = data{2,2}{:};
+        return;
     elseif strcmp(opts{ind},'Set Version')
         writeInfoFile(code_Path);
     end
