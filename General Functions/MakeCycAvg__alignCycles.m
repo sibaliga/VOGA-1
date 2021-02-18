@@ -123,7 +123,7 @@ function [type,starts,ends,stims] = MakeCycAvg__alignCycles(info,Fs,ts,stim)
             type=1;
             trig = abs(diff(stim));
             starts = find(trig==1);
-            snip_len = median(diff(starts)); %CHANGE ME
+            snip_len = round(median(diff(starts))); %CHANGE ME
             ends = starts + snip_len - 1;
             fparts = split(info.dataType,'-');
             freq = str2double(strrep(fparts{contains(fparts,'Hz')},'Hz',''));
