@@ -50,7 +50,7 @@ load([Seg_Path,filesep,In_FileName],'Data');
 fig = figure(1);
 delete(findall(gcf,'type','annotation')) %in case there are leftover anotations
 fig.Units = 'inches';
-fig.Position = [0 0 11 10];
+fig.Position = [0 0 20 12];
 %Title
 annotation('textbox',[0 .9 1 .1],'String',strrep(strrep(strrep(In_FileName,'_',' '),'-',' '),'.mat',''),'FontSize',14,...
     'HorizontalAlignment','center','EdgeColor','none');
@@ -267,7 +267,7 @@ while ~strcmp(opts{ind},'Save') %Run until it's ready to save or just hopeless
                        'SelectionMode','single',...
                        'ListSize',[100 100],...
                        'ListString',opts,...
-                       'Position',[11,7.75,2,2.75]);  
+                       'Position',[20,7.75,2,2.75]);  
     if tf2 == 0 %Treat this like an exit
         return;
     end
